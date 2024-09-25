@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repositorios de GitHub</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+body {
+            background-image: url('images/fondo.png'); /* Ruta de la imagen */
+            background-size: cover; /* La imagen cubre toda la pantalla */
+            background-position: center; /* La imagen está centrada */
+            background-attachment: fixed; /* Hace que el fondo no se desplace cuando haces scroll */
+            background-repeat: no-repeat; /* Evita que la imagen se repita */
+        }
+
+        .card {
+            background-color: rgba(0, 0, 0, 0.7); /* Fondo semitransparente para la tarjeta */
+            color: black; /* Color blanco del texto */
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        table {
+            background-color: rgba(255, 255, 255, 255); /* Fondo semitransparente para la tabla */
+		color black;
+        }
+
+        h1, th, td {
+            color: white;
+        }
+
+        .btn {
+            background-color: ##008000;
+            color: black;
+        }
+
+
+        /* Definimos un color personalizado para el título */
+        .custom-title {
+	background-color: rgba(255, 255, 255, 255); /* Fondo semitransparente para la tarjeta */
+
+            color: #000000; /* Cambia a cualquier color que prefieras */
+            font-size: 3em; /* Ajusta el tamaño del título */
+            text-align: center; /* Centrar el texto */
+        }
+	td {
+            color: #000000; /* Cambiar color del texto en las celdas a rojo */
+            font-size: 1em; /* Tamaño del texto en las celdas */
+            font-family: Arial, sans-serif; /* Cambiar familia de fuente */
+	}
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Aquí aplicamos la clase CSS personalizada al título -->
+        <h1 class="custom-title" id="user-title">Repositorios de GitHub </h1>
+        
+        <!-- El resto del contenido -->
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card mt-4">
+                    <div class="card-header bg-dark text-white">
+                        Repositorios del usuario: <span id="username-display"></span>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped mt-4" id="repo-table" style="display: none;">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Descripción</th>
+                                    <th>Watchers</th>
+                                </tr>
+                            </thead>
+                            <tbody id="repo-list">
+                                <!-- Aquí se agregarán dinámicamente los repositorios -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Botón para volver a la página de inicio -->
+                <div class="text-center mt-4">
+                    <a href="index1.html" class="btn btn-info btn-lg">
+                        <i class="fas fa-arrow-left"></i> Volver a la página principal
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <!-- Custom Script -->
+    <script>
+        $(document).ready(function(){
+            var urlParams = new URLSearchParams(window.location.search);
+            var username = urlParams.get('username');
+
+            if (username) {
+                $('#user-title').append(username);
+
+                $.get(`https://api.github.com/users/${username}/repos`, function(repos){
+                    if (repos.length === 0) {
+                        alert("No se encontraron repositorios para este usuario.");
+                        return;
+                    }
+
+                    $('#repo-table').show();
+                    
+                    $.each(repos, function(index, repo){
+                        $('#repo-list').append(`
+                            <tr>
+                                <td><a href="${repo.html_url}" target="_blank">${repo.name}</a></td>
+                                <td>${repo.description ? repo.description : "Sin descripción"}</td>
+                                <td>${repo.watchers_count}</td>
+                            </tr>
+                        `);
+                    });
+                }).fail(function(){
+                    alert("Usuario no encontrado. Vuelva a la página principal.");
+                });
+            } else {
+                alert("No se proporcionó un nombre de usuario. Vuelva a la página principal");
+            }
+        });
+    </script>
+</body>
+</html>

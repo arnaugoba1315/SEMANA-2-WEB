@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Usuario de GitHub</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-image: url('images/fondo.png'); /* Ruta de la imagen */
+            background-size: cover; /* La imagen cubre toda la pantalla */
+            background-position: center; /* La imagen está centrada */
+            background-attachment: fixed; /* Hace que el fondo no se desplace cuando haces scroll */
+            background-repeat: no-repeat; /* Evita que la imagen se repita */
+        }
+
+        .card {
+            background-color: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
+            color: white; /* Color blanco para el texto */
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 100px;
+        }
+
+        .form-group label {
+            color: white; /* Texto blanco para el label */
+        }
+
+        .btn {
+            background-color: #17a2b8; /* Color del botón (Bootstrap Info color) */
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="card col-md-6">
+            <h2 class="text-center">Buscar Usuario de GitHub</h2>
+            <form action="repos2.html" method="GET" class="mt-4">
+                <div class="form-group">
+                    <label for="username">Nombre de Usuario de GitHub:</label>
+                    <input type="text" class="form-control" id="username" name="username" required placeholder="Ingrese el nombre de usuario">
+                </div>
+                <button type="submit" class="btn btn-info btn-block">Buscar Repositorios</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
